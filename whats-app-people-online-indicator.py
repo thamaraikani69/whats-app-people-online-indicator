@@ -1,3 +1,4 @@
+###-------------------------------------------------sivaya nama-----------------------------###
 from selenium import webdriver
 import time
 
@@ -9,9 +10,13 @@ import time
 from datetime import datetime
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import TimeoutException
 
-
-localtime = time.asctime(time.localtime(time.time()))
 def target():
 
     driver=webdriver.Chrome("C:\\chromedriver.exe")
@@ -22,55 +27,53 @@ def target():
 
     time.sleep(3)
 
-    search=driver.find_element_by_xpath('//*[@id="side"]/div[1]/div/label')
-    search_name=input('enter the name')
-    search.send_keys('search_name')
-    input('wait until the name in a list')
+    search_name = input('enter the name here')
+    search.send_keys(search_name)
+    input('enter1')
 
 
     search_click=driver.find_element_by_xpath('//*[@id="pane-side"]/div/div/div/div[2]/div').click()
-
-
-    time.sleep(20)
-    print(localtime)
+    time.sleep(3)
+    print(datetime.now())
     online(driver)
 
 def online(driver):
 
+    current_status=driver.find_element_by_class_name('O90ur').text
+    print('current status:',current_status)
+
     while '1' == '1':
-
-            time.sleep(10)
-            #driver.find_element_by_class_name('O90ur').is_displayed()
-            check_fun=driver.find_element_by_class_name('O90ur')
-
-            if check_fun != 'online':
+        check_fun=driver.find_element_by_class_name('O90ur').text
 
 
-                message_send_call(driver)
+        if check_fun == 'online':
 
 
-            else:
-                None
+            print('online\n')
+            print(check_fun + '\n')
+            print(datetime.now()+'\n')
+            message_send_call(driver)
+
+
+        else:
+            None
+
 
 
 
 
 def message_send_call(driver):
-    TO = 'place a sender mobile number here'
-
-    print(    "Local current time :", localtime)
-
-    times=localtime
+    TO = message_sent
+    times=datetime.now()
     message = '''online\n''' + str(times)
-    
-    mob = 'place a mobile number here'
-    passw = 'place a login password here'
+
+    mob = mobile_num
+    passw = passw_pass
     try:
 
 
-                        #https://smsapi.engineeringtgr.com/ visit a website to generate an api key 
-                        apikey=('enter the api key here')
-                        #example_apikey="thamav9lOdWuZRaSfDrXmM95N3e472"
+                        apikey=apikey
+                        #examole apikey="osamav92OdWuZRaSfDrXmM95N3e472"
                         api = apikey
 
                         headers = {"Accept-Language": "en-US,en;q=0.5",
@@ -117,9 +120,9 @@ def message_send_call(driver):
 def logout_waiting(driver):
 
     while '1' == '1':
-        check_fun=driver.find_element_by_class_name('O90ur')
+        check_fun=driver.find_element_by_class_name('O90ur').text
 
-        if check_fun != 'online':
+        if check_fun == 'online':
 
 
             None
@@ -127,10 +130,20 @@ def logout_waiting(driver):
 
         else:
 
-            online()
+            print ('offline\n')
+            print(check_fun+'\n')
+            print(datetime.now())
+            online(driver)
+
 
 
 
 if __name__ == '__main__':
-
+    
+  message_sent=input('enter the sender mobile number' )
+  print("create a message api key in here https://smsapi.engineeringtgr.com/ and check a mail")
+  apikey=input("enter the apikey")
+  mobile_num=input("enter the login mobile number")
+  passw_pass=input("enter the login password")
   target()
+    
